@@ -540,5 +540,85 @@
     <span>Prix exprimés en dinars tunisiens (DT)</span>
   </footer>
 </div>
+<script>
+(function () {
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
 
+  function setOpen(sec, open) {
+    var btn = sec.querySelector(':scope > h2 .fold');
+    var body = sec.querySelector(':scope > .fold-body');
+    if (!btn || !body) return;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    body.hidden = !open;
+  }
+
+  sections.forEach(function (sec) {
+    var h2 = sec.querySelector(':scope > h2');
+    if (!h2) return;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'fold';
+    btn.setAttribute('aria-expanded', 'true');
+    btn.setAttribute('aria-controls', sec.id + '-body');
+    btn.textContent = h2.textContent;
+    h2.textContent = '';
+    h2.appendChild(btn);
+
+    var body = document.createElement('div');
+    body.className = 'fold-body';
+    body.id = sec.id + '-body';
+    while (h2.nextSibling) body.appendChild(h2.nextSibling);
+    sec.appendChild(body);
+
+    btn.addEventListener('click', function () {
+      setOpen(sec, btn.getAttribute('aria-expanded') !== 'true');
+    });
+  });
+
+  // Bouton tout replier / tout déplier
+  var tools = document.createElement('div');
+  tools.className = 'tools';
+  var all = document.createElement('button');
+  all.type = 'button';
+  all.id = 'toggle-all';
+  all.textContent = 'Tout replier';
+  var allOpen = true;
+  all.addEventListener('click', function () {
+    allOpen = !allOpen;
+    sections.forEach(function (s) { setOpen(s, allOpen); });
+    all.textContent = allOpen ? 'Tout replier' : 'Tout déplier';
+  });
+  tools.appendChild(all);
+  var main = document.querySelector('main');
+  main.insertBefore(tools, main.firstChild);
+
+  // Navigation : ouvre la rubrique puis y fait défiler la page
+  document.querySelectorAll('nav a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var sec = document.getElementById(a.getAttribute('href').slice(1));
+      if (!sec) return;
+      setOpen(sec, true);
+      sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Bouton qui déroule la liste des rubriques (repliée par défaut sur téléphone)
+  var navBtn = document.getElementById('nav-toggle');
+  var navList = document.getElementById('nav-list');
+  function setNav(open) {
+    navBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navList.hidden = !open;
+  }
+  setNav(!(window.matchMedia && window.matchMedia('(max-width: 700px)').matches));
+  navBtn.addEventListener('click', function () {
+    setNav(navBtn.getAttribute('aria-expanded') !== 'true');
+  });
+  navList.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      if (window.matchMedia && window.matchMedia('(max-width: 700px)').matches) setNav(false);
+    });
+  });
+})();
+</script>
 </body></html>
