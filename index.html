@@ -131,6 +131,40 @@
     text-wrap: balance;
   }
 
+  /* Rangée de 4 logos en haut de la page */
+  .logos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    justify-items: center;
+    gap: 12px;
+    margin: 0 auto 34px;
+    padding-bottom: 26px;
+    border-bottom: 1px solid var(--line);
+  }
+  .logos figure { margin: 0; display: flex; justify-content: center; min-width: 0; }
+  .logos img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: clamp(52px, 11vw, 96px);
+    object-fit: contain;
+  }
+  .logos .slot {
+    width: clamp(56px, 18vw, 150px);
+    height: clamp(52px, 11vw, 96px);
+    border: 1.5px dashed var(--dots);
+    display: grid;
+    place-items: center;
+    font-family: var(--f-display);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+  }
+
   /* Navigation par rubriques */
   nav {
     position: sticky;
@@ -340,11 +374,17 @@
 
 <div class="card">
   <header>
-    <img src="img/uetunis.png" style="width: 200px; ">
-    <p class="kicker">Cafétéria</p>
-    <h1>Rooftop</h1>
+    <div class="logos">
+      <img src="img/uetunis.png" style="width: 200px; ">
+      <img src="img/logoeuropedecom.png" style="width: 200px; ">
+      <img src="img/logosciencepo.png" style="width: 200px; ">
+      <img src="img/uetunis.png" style="width: 200px; ">
+    </div>
+    
+    <h1>Roofeat</h1>
+    <p class="kicker">Café Resto</p>
     <p class="tagline">Eat &bull; Drink &bull; Relax</p>
-    <p class="intro">Une restauration moderne, généreuse et accessible à tous les étudiants du campus.</p>
+    <p class="intro">Une Café Resto, généreuse et accessible à tous les étudiants du campus.</p>
   </header>
 
   <nav aria-label="Rubriques de la carte">
