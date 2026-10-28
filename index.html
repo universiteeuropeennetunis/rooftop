@@ -61,6 +61,7 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
@@ -422,7 +423,7 @@
 
     <section id="plats-chauds" class="band">
       <h2>Plats chauds &middot; Campus Kitchen</h2>
-      
+      <p class="sub">Un plat différent chaque jour</p>
       <div class="dishes">
         <article class="dish">
           <h3>Escalope panée</h3>
@@ -631,7 +632,7 @@
     });
   });
 
-  // Bouton qui déroule la liste des rubriques (repliée par défaut sur téléphone)
+  
   var navBtn = document.getElementById('nav-toggle');
   var navList = document.getElementById('nav-list');
   function setNav(open) {
